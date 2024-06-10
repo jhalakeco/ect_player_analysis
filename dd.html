@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag and Drop</title>
+    <style>
+        #field-image {
+            width: 100%; /* Adjust width as needed */
+            height: auto; /* Adjust height as needed */
+            position: relative; /* Make the image container relative to position the player names */
+            border: 2px dashed #ccc;
+        }
+
+        .draggable {
+            width: 100px;
+            height: 30px; /* Adjust height as needed */
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            margin: 10px;
+            cursor: move;
+            position: absolute; /* Position the player names absolutely within the image container */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="field-image">
+        <img src="sc.png" alt="Field Image">
+       </div>
+
+<script>
+    function drag(event) {
+        event.dataTransfer.setData("text/plain", event.target.id);
+    }
+
+    document.addEventListener('dragover', function(event) {
+        event.preventDefault();
+    });
+
+    document.addEventListener('drop', function(event) {
+        event.preventDefault();
+        let data = event.dataTransfer.getData("text");
+        let droppedElement = document.getElementById(data);
+        let fieldImage = document.getElementById("field-image");
+        let offsetX = event.clientX - fieldImage.getBoundingClientRect().left;
+        let offsetY = event.clientY - fieldImage.getBoundingClientRect().top;
+        droppedElement.style.left = offsetX + "px";
+        droppedElement.style.top = offsetY + "px";
+        fieldImage.appendChild(droppedElement);
+    });
+</script>
+
+</body>
+</html>
